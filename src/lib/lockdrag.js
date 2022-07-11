@@ -14,34 +14,34 @@ class Totals {
 }
 export default function lockDrag(elem) {
     const totals = new Totals();
-    function mouseDown() {
+    function pointerDown() {
         elem.requestPointerLock();
     }
-    function mouseMove(event) {
+    function pointerMove(event) {
         const { movementY, movementX } = event;
         const detail = { movementY, movementX };
         elem.dispatchEvent(new CustomEvent("lockdrag", { detail }));
         totals.add(detail);
     }
-    function mouseUp() {
-        document.removeEventListener('mouseup', mouseUp);
+    function pointerUp() {
+        document.removeEventListener('pointerup', pointerUp);
         document.exitPointerLock();
         elem.dispatchEvent(new CustomEvent("lockdragrelease", { detail: totals }));
         totals.reset();
     }
     function pointerLockChange() {
         if(document.pointerLockElement === elem) {
-            document.addEventListener('mousemove', mouseMove);
-            document.addEventListener('mouseup', mouseUp);
+            document.addEventListener('pointermove', pointerMove);
+            document.addEventListener('pointerup', pointerUp);
         } else {
-            document.removeEventListener('mousemove', mouseMove);
+            document.removeEventListener('pointermove', pointerMove);
         }
     }
-    elem.addEventListener('mousedown', mouseDown);
+    elem.addEventListener('pointerdown', pointerDown);
     document.addEventListener('pointerlockchange', pointerLockChange);
     return {
         destroy() {
-            elem.removeEventListener('mousedown', mouseDown);
+            elem.removeEventListener('pointerdown', pointerDown);
             document.removeEventListener('pointerlockchange', pointerLockChange);
         }
     }
