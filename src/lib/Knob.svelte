@@ -41,12 +41,14 @@
 
 <style>
  .knob {
-     height: 3rem;
-     width: 3rem;
+     height: 6rem;
+     width: 6rem;
+     font-size: 2rem;
+     user-select: none;
      background: black;
      color: white;
      display: grid;
      place-items: center;
-     border-radius: 1.5rem;
+     border-radius: 50%;
  }
 </style>
