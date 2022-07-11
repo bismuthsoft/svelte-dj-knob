@@ -1,30 +1,22 @@
 <script>
- import lockDrag from '$lib/lockDrag.js'
+ import lockdrag from '$lib/lockdrag.js'
  const clamp = (a, b, c) => Math.min(Math.max(a, b), c);
  let value = 50;
- let updated = false;
- let input;
- function updateVal(drag) {
-     if (drag !== 0) {
-         value = clamp(0, value+drag, 100);
-         updated = true;
-     }
+ let inputElem;
+ function knobMove({detail: { movementY }}) {
+     value = clamp(0, value-movementY, 100);
  }
- function pointerDown(event) {
-     updated = false;
- }
- function pointerUp(event) {
-     if (!updated) {
-         console.log('focusing', input);
-         input.focus();
+ function knobRelease({detail: { movementY }}) {
+     if (movementY === 0) {
+         inputElem.focus();
      }
  }
 </script>
 
-<div use:lockDrag="{updateVal}"
-     on:pointerdown="{pointerDown}"
-     on:pointerup="{pointerUp}">
-    <input type="text" bind:value bind:this={input} />
+<div use:lockdrag
+     on:lockdrag="{knobMove}"
+     on:lockdragrelease="{knobRelease}" >
+    <input type="text" bind:value bind:this={inputElem} />
 </div>
 
 <style>

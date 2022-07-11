@@ -1,8 +1,12 @@
 <script>
  import Knob from '$lib/Knob.svelte';
+ import SamKnob from '$lib/SamKnob.svelte';
+ import Knobber from '$lib/Knobber.svelte';
 </script>
 
-<Knob />
+<Knobber let:value>
+    <SamKnob {value} />
+</Knobber>
 
 <style>
  :global(body) {
@@ -10,7 +14,7 @@
      display: grid;
      place-items: center;
      height: 100vh;
-     background: tomato;
+     background: #66A;
      font-family: sans-serif;
  }
 </style>
