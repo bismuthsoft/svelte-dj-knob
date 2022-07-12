@@ -5,10 +5,6 @@
 </script>
 
 <Knobber let:value>
-    <Knob {value} />
-</Knobber>
-
-<Knobber let:value>
     <SamKnob {value} />
 </Knobber>
 
