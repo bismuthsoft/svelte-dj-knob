@@ -3,6 +3,8 @@
  export let label = '';
  export let min = 0;
  export let max = 100;
+ export let size = "10rem";
+ export let textColor = 'white';
 
  const radius = 50;
  const margin = radius * 0.2;
@@ -10,8 +12,8 @@
  const innerRadius = radius - margin;
 
  const tickLabelWidth = radius * 0.35;
- const minTickLabel = {x: tickLabelWidth, y: radius*1.8};
- const maxTickLabel = {x: radius*2 - tickLabelWidth, y: radius*1.8};
+ const minTickLabel = { x: tickLabelWidth, y: radius*1.8 };
+ const maxTickLabel = { x: radius*2 - tickLabelWidth, y: radius*1.8 };
 
  function angleOnKnob (position) {
      const bottomAngle = -Math.PI / 2.0;
@@ -29,52 +31,65 @@
  const numTicks = 9;
  const outerTicks = Array(numTicks).fill(0).map((_, x) =>
      [pointOnKnob(x/(numTicks-1), innerRadius), pointOnKnob(x/(numTicks-1), radius*0.95)]
- )
+ );
 
  $: rangePos = value / (max - min) - min;
  $: tickMark = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
 </script>
 
-<div id="knobcontainer">
-    <svg width="{radius*2.2}" height="{radius*2}">
-        <g transform="translate({radius*0.1})">
-            {#each outerTicks as tick, idx}
-                <line x1="{tick[0].x}" y1="{tick[0].y}"
-                      x2="{tick[1].x}" y2="{tick[1].y}"
-                      stroke="#aaa"
-                      stroke-width="3"
-                />
-            {/each}
-            <circle cx="{radius}" cy="{radius}" r="{innerRadius}"
-                    stroke="white" stroke-width="4" fill="black"/>
-            <line x1="{tickMark[0].x}" y1="{tickMark[0].y}"
-                  x2="{tickMark[1].x}" y2="{tickMark[1].y}"
-                  stroke="red"
-                  stroke-width="6"
-                  stroke-linecap="round"
+<figure>
+    <svg viewbox="{-radius*.1} 0 {radius*2.2} {radius*2}"
+         height="{size}">
+        {#each outerTicks as tick, idx}
+            <line x1="{tick[0].x}" y1="{tick[0].y}"
+                  x2="{tick[1].x}" y2="{tick[1].y}"
+                  stroke="#aaa"
+                  stroke-width="3"
             />
-            <text inline-size="{tickLabelWidth}" x="{minTickLabel.x}" y="{minTickLabel.y}" text-anchor="end" class="tickLabel">{min}</text>
-            <text inline-size="{tickLabelWidth}" x="{maxTickLabel.x}" y="{maxTickLabel.y}" text-anchor="start" class="tickLabel">{max}</text>
-        </g>
+        {/each}
+        <circle cx="{radius}" cy="{radius}" r="{innerRadius}"
+                stroke="white" stroke-width="4" fill="black"/>
+        <line x1="{tickMark[0].x}" y1="{tickMark[0].y}"
+              x2="{tickMark[1].x}" y2="{tickMark[1].y}"
+              stroke="red"
+              stroke-width="6"
+              stroke-linecap="round"
+        />
+        <text class="tickLabel"
+              fill="{textColor}"
+              {...minTickLabel}
+              inline-size="{tickLabelWidth}"
+              text-anchor="end">
+            {min}
+        </text>
+        <text class="tickLabel"
+              fill="{textColor}"
+              {...maxTickLabel}
+              inline-size="{tickLabelWidth}"
+              text-anchor="start">
+            {max}
+        </text>
     </svg>
-    <div class="label">{label}</div>
-</div>
+    <figcaption style="color={textColor}">{label}</figcaption>
+</figure>
 
 <style>
- #knobcontainer {
-     display: inline-block;
+ figure {
+     display: flex;
+     flex-direction: column;
+ }
+ figcaption {
+     position: relative;
+     top: -15px;
+     text-align: center;
  }
  .tickLabel {
      border: solid 1px black;
      position: absolute;
      font-size: 10px;
  }
- .label, .tickLabel {
+ figcaption, .tickLabel {
      font-family: Helvetica, Tex Gyre Heros, sans-serif;
- }
- .label {
-     position: relative;
-     text-align: center;
-     top: -15px;
+     fill: white;
  }
 </style>
