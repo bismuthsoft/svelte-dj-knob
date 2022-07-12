@@ -1,9 +1,8 @@
 <script>
  export let value = 50;
- export let label = 'label';
+ export let label = '';
  export let min = 0;
  export let max = 100;
- export let log; // Set to true for logarithmic range
 
  const radius = 50;
  const margin = radius * 0.2;
@@ -27,22 +26,7 @@
      return out;
  }
 
- // Value 0 thru 1, return the number on the knob there
- function valueOnKnob (v) {
-     if (log) {
-         return v * (max - min) + min;
-     } else {
-         return v * (max - min) + min;
-     }
- }
-
- // Value min thru max, return the knob position (0 thru 1) there
- function positionOfValue (v) {
-     return (v - min) / (max - min);
- }
-
  const numTicks = 9;
- const numTickLabels = 5;
  const outerTicks = Array(numTicks).fill(0).map((_, x) =>
      [pointOnKnob(x/(numTicks-1), innerRadius), pointOnKnob(x/(numTicks-1), radius*0.95)]
  )
