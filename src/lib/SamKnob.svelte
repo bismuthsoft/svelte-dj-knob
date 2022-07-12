@@ -71,7 +71,6 @@
             />
             <text inline-size="{tickLabelWidth}" x="{minTickLabel.x}" y="{minTickLabel.y}" text-anchor="end" class="tickLabel">{min}</text>
             <text inline-size="{tickLabelWidth}" x="{maxTickLabel.x}" y="{maxTickLabel.y}" text-anchor="start" class="tickLabel">{max}</text>
-            <text>{max}</text>
         </g>
     </svg>
     <div class="label">{label}</div>
