@@ -4,7 +4,7 @@
  export let min = 0;
  export let max = 100;
  export let value = 50;
- export let showLog = true;
+ export let showLog = false;
  let inputElem;
  let log = '';
  function knobMove({detail: { movementY }}) {
