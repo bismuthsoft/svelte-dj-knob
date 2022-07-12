@@ -1,11 +1,10 @@
 <script>
  import Knob from '$lib/Knob.svelte';
- import SamKnob from '$lib/SamKnob.svelte';
  import Knobber from '$lib/Knobber.svelte';
 </script>
 
 <Knobber let:value>
-    <SamKnob {value} />
+    <Knob {value} />
 </Knobber>
 
 <style>
