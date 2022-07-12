@@ -1,0 +1,3 @@
+#+TITLE: Todo
+
+- set value upon submitting input rather than as typing
