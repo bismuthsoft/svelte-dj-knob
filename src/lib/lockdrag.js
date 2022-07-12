@@ -1,33 +1,24 @@
-class Totals {
-    constructor() {
-        this.reset();
-    }
-    reset() {
-        this.movementX = 0;
-        this.movementY = 0;
-    }
-    add(other) {
-        Object.keys(this).forEach(key => {
-            this[key] += other[key];
-        });
-    }
-}
+const defaultTotals = () => ({
+    movementX: 0,
+    movementY: 0,
+});
 export default function lockDrag(elem) {
-    const totals = new Totals();
+    let totals = defaultTotals();
     function pointerDown() {
         elem.requestPointerLock();
     }
     function pointerMove(event) {
-        const { movementY, movementX } = event;
-        const detail = { movementY, movementX };
+        let { movementY, movementX } = event;
+        let detail = { movementY, movementX };
         elem.dispatchEvent(new CustomEvent("lockdrag", { detail }));
-        totals.add(detail);
+        totals.movementX += movementX;
+        totals.movementY += movementY;
     }
     function pointerUp() {
         document.removeEventListener('pointerup', pointerUp);
         document.exitPointerLock();
         elem.dispatchEvent(new CustomEvent("lockdragrelease", { detail: totals }));
-        totals.reset();
+        totals = defaultTotals();
     }
     function pointerLockChange() {
         if(document.pointerLockElement === elem) {
