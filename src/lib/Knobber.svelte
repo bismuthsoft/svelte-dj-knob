@@ -4,9 +4,16 @@
  export let min = 0;
  export let max = 100;
  export let value = 50;
+ export let showLog = true;
  let inputElem;
+ let log = '';
  function knobMove({detail: { movementY }}) {
-     value = clamp(min, value-movementY, max);
+     // 1 pixel deadzone because of possible firefox bug.
+     // On nixos: movementY === -1 instead of 0, causing drift.
+     if (true || Math.abs(movementY) > 1) {
+         log = `${movementY}\n${log}`;
+         value = clamp(min, value-movementY, max);
+     }
  }
  function knobRelease({detail: { movementY }}) {
      if (movementY === 0) {
@@ -24,6 +31,13 @@
     </div>
     <input type="text" bind:value bind:this={inputElem} />
 </div>
+
+{#if showLog}
+<pre>
+log:
+{log}
+</pre>
+{/if}
 
 <style>
  .knobber {
@@ -49,5 +63,9 @@
  }
  input:focus {
      color: white;
+ }
+ pre {
+     height: 5em;
+     overflow-y: scroll;
  }
 </style>
