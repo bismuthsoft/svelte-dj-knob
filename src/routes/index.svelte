@@ -4,8 +4,9 @@
 </script>
 
 <Knobber let:value>
-    <Knob {value} />
+    <Knob {value} label="svelte-dj-knob" />
 </Knobber>
+Reference text for size comparison
 
 <style>
  :global(body) {
