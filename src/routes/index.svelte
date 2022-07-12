@@ -6,9 +6,16 @@
 <Knobber let:value>
     <Knob {value} label="svelte-dj-knob" />
 </Knobber>
-Reference text for size comparison
+<p>
+    A knob with usable controls
+    similar to those in DJ software
+</p>
 
 <style>
+ p {
+     text-align: center;
+     max-width: 25ch;
+ }
  :global(body) {
      margin: 0;
      display: grid;
