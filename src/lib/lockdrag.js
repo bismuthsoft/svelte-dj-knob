@@ -2,7 +2,9 @@ const defaultTotals = () => ({
     movementX: 0,
     movementY: 0,
 });
-export default function lockDrag(elem) {
+export default function lockDrag(elem, options = {
+    originFix: false,
+}) {
     let totals = defaultTotals();
     let origin;
     function pointerDown() {
@@ -16,9 +18,11 @@ export default function lockDrag(elem) {
         // with velocity the pointer continues to move in that direction.
         //
         // Possibly related issue: https://github.com/w3c/pointerlock/issues/42
-        origin ??= { movementX, movementY };
-        movementX -= origin.movementX;
-        movementY -= origin.movementY;
+        if (options.originFix) {
+            origin ??= { movementX, movementY };
+            movementX -= origin.movementX;
+            movementY -= origin.movementY;
+        }
         const detail = { movementX, movementY };
         elem.dispatchEvent(new CustomEvent("lockdrag", { detail }));
         totals.movementX += detail.movementX;
@@ -45,6 +49,9 @@ export default function lockDrag(elem) {
         destroy() {
             elem.removeEventListener('pointerdown', pointerDown);
             document.removeEventListener('pointerlockchange', pointerLockChange);
+        },
+        update(newOpts) {
+            options = newOpts;
         }
     }
 }
