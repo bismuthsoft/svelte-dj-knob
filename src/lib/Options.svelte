@@ -4,9 +4,9 @@
 
 <div>
     <h2>Options</h2>
-    <label>
+    <label title="enable if knob drifts constantly when clicked">
         <input type="checkbox" bind:checked="{options.originFix}" />
-        Browser drift fix
+        Knob drift fix
     </label>
 </div>
 
