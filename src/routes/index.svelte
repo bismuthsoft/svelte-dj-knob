@@ -1,10 +1,13 @@
 <script>
  import Knob from '$lib/Knob.svelte';
  import DumbKnob from '$lib/DumbKnob.svelte';
- let originFix = false;
+ import Options from '$lib/Options.svelte';
+ let options = {
+     originFix: false,
+ };
 </script>
 
-<Knob let:value bind:originFix>
+<Knob let:value bind:originFix={options.originFix}>
     <DumbKnob {value} label="svelte-dj-knob" />
 </Knob>
 <p>
@@ -12,11 +15,7 @@
     similar to those in DJ software
 </p>
 
-<div class="config">
-    <h2>Options</h2>
-    <input id="originFix" type="checkbox" bind:checked="{originFix}" />
-    <label for="originFix">Browser drift fix</label>
-</div>
+<Options bind:options />
 
 <style>
  p {
