@@ -1,6 +1,5 @@
 <script>
  import Knob from '$lib/Knob.svelte';
- import DumbKnob from '$lib/DumbKnob.svelte';
  import Options from '$lib/Options.svelte';
  let options = {
      originFix: false,
