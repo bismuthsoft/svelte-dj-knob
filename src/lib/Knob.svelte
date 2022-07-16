@@ -31,7 +31,9 @@
             {value} {min} {max} {label}
         />
     </div>
-    <input type="text" bind:value bind:this={inputElem} />
+    <input type="text" {value} bind:this="{inputElem}"
+           on:change="{e => value = e.target.value}"
+    />
 </div>
 
 <style>
