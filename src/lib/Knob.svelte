@@ -5,7 +5,7 @@
  export let min = 0;
  export let max = 100;
  export let value = 50;
- export let originFix = true;
+ export let options = {};
  export let component = DumbKnob;
  let inputElem;
  function knobMove({detail: { movementY }}) {
@@ -21,7 +21,7 @@
 </script>
 
 <div class="knobber"
-     use:lockdrag="{{originFix}}"
+     use:lockdrag="{options}"
      on:lockdrag="{knobMove}"
      on:lockdragrelease="{knobRelease}">
     <div class="knob">
