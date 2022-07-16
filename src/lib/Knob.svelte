@@ -7,6 +7,7 @@
  export let value = 50;
  export let options = {};
  export let component = DumbKnob;
+ export let label = '';
  let inputElem;
  function knobMove({detail: { movementY }}) {
      if (movementY) {
@@ -27,7 +28,7 @@
     <div class="knob">
         <svelte:component
             this={component}
-            {value} {min} {max}
+            {value} {min} {max} {label}
         />
     </div>
     <input type="text" bind:value bind:this={inputElem} />
