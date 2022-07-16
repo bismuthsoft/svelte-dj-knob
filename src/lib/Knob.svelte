@@ -1,10 +1,12 @@
 <script>
  import lockdrag from '$lib/lockdrag.js';
+ import DumbKnob from '$lib/DumbKnob.svelte';
  const clamp = (a, b, c) => Math.min(Math.max(a, b), c);
  export let min = 0;
  export let max = 100;
  export let value = 50;
  export let originFix = true;
+ export let component = DumbKnob;
  let inputElem;
  function knobMove({detail: { movementY }}) {
      if (movementY) {
@@ -23,7 +25,10 @@
      on:lockdrag="{knobMove}"
      on:lockdragrelease="{knobRelease}">
     <div class="knob">
-        <slot {value} />
+        <svelte:component
+            this={component}
+            {value} {min} {max}
+        />
     </div>
     <input type="text" bind:value bind:this={inputElem} />
 </div>

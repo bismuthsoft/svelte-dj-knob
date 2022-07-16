@@ -5,11 +5,15 @@
  let options = {
      originFix: false,
  };
+ let myValue = 0;
 </script>
 
-<Knob let:value bind:originFix={options.originFix}>
-    <DumbKnob {value} label="svelte-dj-knob" />
-</Knob>
+<Knob
+    component="{DumbKnob}"
+    label="svelte-dj-knob"
+    bind:value="{myValue}"
+    {options}
+/>
 <p>
     A knob with usable controls
     similar to those in DJ software
@@ -29,13 +33,5 @@
      height: 100vh;
      background: #66A;
      font-family: sans-serif;
- }
- .config {
-     padding: .8em 1em;
-     background: #fff3;
- }
- .config h2 {
-     font-size: 1.2rem;
-     margin-top: 0;
  }
 </style>
