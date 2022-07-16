@@ -12,8 +12,8 @@
 
 <style>
  div {
-     padding: .8em 1em;
-     background: #fff3;
+     padding: 1em;
+     border: dotted 2px #fff8;
  }
  h2 {
      font-size: 1.2rem;

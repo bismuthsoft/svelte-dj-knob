@@ -29,7 +29,8 @@
      display: grid;
      place-items: center;
      height: 100vh;
-     background: #66A;
+     background: #65A;
+     color: white;
      font-family: sans-serif;
  }
 </style>
