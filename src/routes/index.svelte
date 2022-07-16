@@ -5,13 +5,12 @@
  let options = {
      originFix: false,
  };
- let myValue = 0;
+ let value = 0;
 </script>
 
 <Knob
-    component="{DumbKnob}"
     label="svelte-dj-knob"
-    bind:value="{myValue}"
+    bind:value
     {options}
 />
 <p>
