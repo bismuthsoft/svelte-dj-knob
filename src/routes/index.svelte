@@ -32,5 +32,6 @@
      background: #65A;
      color: white;
      font-family: sans-serif;
+     overflow: hidden;
  }
 </style>
