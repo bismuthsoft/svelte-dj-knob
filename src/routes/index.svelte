@@ -7,19 +7,24 @@
  let value = 0;
 </script>
 
-<Knob
-    label="svelte-dj-knob"
-    bind:value
-    {options}
-/>
-<p>
-    A knob with usable controls
-    similar to those in DJ software
-</p>
-
-<Options bind:options />
+<div>
+    <Knob
+        label="svelte-dj-knob"
+        bind:value
+        {options}
+    />
+    <p>
+        A knob with usable controls
+        similar to those in DJ software
+    </p>
+    <Options bind:options />
+</div>
 
 <style>
+ div {
+     display: flex;
+     flex-direction: column;
+ }
  p {
      text-align: center;
      max-width: 25ch;
