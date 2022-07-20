@@ -3,7 +3,7 @@
  export let label = '';
  export let min = 0;
  export let max = 100;
- export let size = "10rem";
+ export let size = "5rem";
  export let textColor = '';
 
  const radius = 50;
@@ -34,7 +34,7 @@
  );
 
  $: rangePos = value / (max - min) - min;
- $: tickMark = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
+ $: pointer = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
 </script>
 
 <div>
@@ -49,8 +49,8 @@
         {/each}
         <circle cx="{radius}" cy="{radius}" r="{innerRadius}"
                 stroke="white" stroke-width="4" fill="black"/>
-        <line x1="{tickMark[0].x}" y1="{tickMark[0].y}"
-              x2="{tickMark[1].x}" y2="{tickMark[1].y}"
+        <line x1="{pointer[0].x}" y1="{pointer[0].y}"
+              x2="{pointer[1].x}" y2="{pointer[1].y}"
               stroke="red"
               stroke-width="6"
               stroke-linecap="round"
@@ -70,7 +70,9 @@
             {max}
         </text>
     </svg>
-    <span style="color:{textColor};">{label}</span>
+    <span style="color:{textColor}; font-size:calc({size} / 5);">
+        {label}
+    </span>
 </div>
 
 <style>
@@ -80,7 +82,7 @@
  }
  span {
      position: relative;
-     top: -15px;
+     top: -.4em;
      text-align: center;
  }
  .tickLabel {

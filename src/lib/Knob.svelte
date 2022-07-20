@@ -6,6 +6,7 @@
  export let max = 100;
  export let step = (min + max) / 100;
  export let value = 50;
+ export let size;
  export let textColor = '';
  export let options = {};
  export let component = DumbKnob;
@@ -30,11 +31,14 @@
     <div class="knob">
         <svelte:component
             this={component}
-            {value} {min} {max} {label} {textColor}
+            {value} {min} {max} {label} {size} {textColor}
         />
     </div>
-    <input type="text" {value} bind:this="{inputElem}"
+    <input type="text"
+           bind:this="{inputElem}"
            on:change="{e => value = e.target.value}"
+           {value}
+
     />
 </div>
 
