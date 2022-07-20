@@ -11,6 +11,8 @@
     <Knob
         label="svelte-dj-knob"
         bind:value
+        size="10rem"
+        textColor="white"
         {options}
     />
     <p>

@@ -4,7 +4,7 @@
  export let min = 0;
  export let max = 100;
  export let size = "10rem";
- export let textColor = 'white';
+ export let textColor = '';
 
  const radius = 50;
  const margin = radius * 0.2;
