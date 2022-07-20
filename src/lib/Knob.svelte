@@ -4,6 +4,7 @@
  const clamp = (a, b, c) => Math.min(Math.max(a, b), c);
  export let min = 0;
  export let max = 100;
+ export let step = (min + max) / 100;
  export let value = 50;
  export let textColor = 'white';
  export let options = {};
@@ -12,7 +13,7 @@
  let inputElem;
  function knobMove({detail: { movementY }}) {
      if (movementY) {
-         value = clamp(min, value-movementY, max);
+         value = clamp(min, value - (movementY*step), max);
      }
  }
  function knobRelease({detail: { movementY }}) {
