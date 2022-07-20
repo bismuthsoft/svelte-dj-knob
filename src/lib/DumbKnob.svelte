@@ -84,11 +84,7 @@
      text-align: center;
  }
  .tickLabel {
-     border: solid 1px black;
      position: absolute;
      font-size: 10px;
- }
- span, .tickLabel {
-     font-family: Helvetica, Tex Gyre Heros, sans-serif;
  }
 </style>
