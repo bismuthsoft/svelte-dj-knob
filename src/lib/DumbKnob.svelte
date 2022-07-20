@@ -70,7 +70,7 @@
             {max}
         </text>
     </svg>
-    <figcaption style="color={textColor}">{label}</figcaption>
+    <figcaption style="color:{textColor};">{label}</figcaption>
 </figure>
 
 <style>
@@ -90,6 +90,5 @@
  }
  figcaption, .tickLabel {
      font-family: Helvetica, Tex Gyre Heros, sans-serif;
-     fill: white;
  }
 </style>

@@ -5,6 +5,7 @@
  export let min = 0;
  export let max = 100;
  export let value = 50;
+ export let textColor = 'white';
  export let options = {};
  export let component = DumbKnob;
  export let label = '';
@@ -28,7 +29,7 @@
     <div class="knob">
         <svelte:component
             this={component}
-            {value} {min} {max} {label}
+            {value} {min} {max} {label} {textColor}
         />
     </div>
     <input type="text" {value} bind:this="{inputElem}"
@@ -39,7 +40,6 @@
 <style>
  .knobber {
      user-select: none;
-     color: white;
      display: grid;
      place-items: center;
  }
