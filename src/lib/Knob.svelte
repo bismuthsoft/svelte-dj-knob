@@ -41,7 +41,7 @@
 <style>
  .knobber {
      user-select: none;
-     display: grid;
+     display: inline-grid;
      place-items: center;
  }
  .knob {

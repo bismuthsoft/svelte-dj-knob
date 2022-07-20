@@ -37,7 +37,7 @@
  $: tickMark = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
 </script>
 
-<figure>
+<div>
     <svg viewbox="{-radius*.1} 0 {radius*2.2} {radius*2}"
          height="{size}">
         {#each outerTicks as tick, idx}
@@ -70,15 +70,15 @@
             {max}
         </text>
     </svg>
-    <figcaption style="color:{textColor};">{label}</figcaption>
-</figure>
+    <span style="color:{textColor};">{label}</span>
+</div>
 
 <style>
- figure {
+ div {
      display: flex;
      flex-direction: column;
  }
- figcaption {
+ span {
      position: relative;
      top: -15px;
      text-align: center;
@@ -88,7 +88,7 @@
      position: absolute;
      font-size: 10px;
  }
- figcaption, .tickLabel {
+ span, .tickLabel {
      font-family: Helvetica, Tex Gyre Heros, sans-serif;
  }
 </style>
