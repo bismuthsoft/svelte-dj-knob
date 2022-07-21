@@ -2,15 +2,27 @@ const defaultTotals = () => ({
     movementX: 0,
     movementY: 0,
 });
-export default function lockDrag(elem, options = {
+
+interface MovementI {
+    movementX: number;
+    movementY: number;
+}
+
+export interface OptionsI {
+    originFix?: boolean,
+}
+
+export type LockDragEvent = CustomEvent<MovementI>;
+
+export default function lockDrag(elem: HTMLElement, options: OptionsI = {
     originFix: false,
 }) {
     let totals = defaultTotals();
-    let origin;
+    let origin: MovementI | undefined;
     function pointerDown() {
         elem.requestPointerLock();
     }
-    function pointerMove(event) {
+    function pointerMove(event: PointerEvent) {
         let { movementX, movementY } = event;
         // For some reason firefox on some systems has an origin of -1 -1
         // instead of 0 0. This hack assumes the first frame of pointermove is
@@ -24,7 +36,7 @@ export default function lockDrag(elem, options = {
             movementY -= origin.movementY;
         }
         const detail = { movementX, movementY };
-        elem.dispatchEvent(new CustomEvent("lockdrag", { detail }));
+        elem.dispatchEvent(new CustomEvent("lockdrag", {detail}) as LockDragEvent);
         totals.movementX += detail.movementX;
         totals.movementY += detail.movementY;
     }
@@ -32,7 +44,7 @@ export default function lockDrag(elem, options = {
         origin = undefined;
         document.removeEventListener('pointerup', pointerUp);
         document.exitPointerLock();
-        elem.dispatchEvent(new CustomEvent("lockdragrelease", { detail: totals }));
+        elem.dispatchEvent(new CustomEvent("lockdragrelease", { detail: totals }) as LockDragEvent);
         totals = defaultTotals();
     }
     function pointerLockChange() {
@@ -50,7 +62,7 @@ export default function lockDrag(elem, options = {
             elem.removeEventListener('pointerdown', pointerDown);
             document.removeEventListener('pointerlockchange', pointerLockChange);
         },
-        update(newOpts) {
+        update(newOpts: OptionsI) {
             options = newOpts;
         }
     }

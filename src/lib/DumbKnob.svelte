@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
  export let value = 50;
  export let label = '';
  export let min = 0;
@@ -15,14 +15,14 @@
  const minTickLabel = { x: tickLabelWidth, y: radius*1.8 };
  const maxTickLabel = { x: radius*2 - tickLabelWidth, y: radius*1.8 };
 
- function angleOnKnob (position) {
+ function angleOnKnob (position: number) {
      const bottomAngle = -Math.PI / 2.0;
      const leastAngle = bottomAngle - (Math.PI * circumfrence);
      const mostAngle = bottomAngle + (Math.PI * circumfrence);
      return leastAngle + position * (mostAngle-leastAngle)
  }
 
- function pointOnKnob (position, rad=radius) {
+ function pointOnKnob (position: number, rad: number = radius) {
      const angle = angleOnKnob(position);
      const out = {x: Math.cos(angle)*rad + radius, y: Math.sin(angle)*rad + radius};
      return out;
@@ -38,9 +38,9 @@
 </script>
 
 <div>
-    <svg viewbox="{-radius*.1} 0 {radius*2.2} {radius*2}"
+    <svg viewBox="{-radius*.1} 0 {radius*2.2} {radius*2}"
          height="{size}">
-        {#each outerTicks as tick, idx}
+        {#each outerTicks as tick}
             <line x1="{tick[0].x}" y1="{tick[0].y}"
                   x2="{tick[1].x}" y2="{tick[1].y}"
                   stroke="#aaa"

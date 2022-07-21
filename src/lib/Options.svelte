@@ -1,5 +1,6 @@
-<script>
- export let options;
+<script lang="ts">
+ import type { OptionsI } from './lockdrag.js';
+ export let options: OptionsI;
 </script>
 
 <div>

@@ -1,23 +1,26 @@
-<script>
+<script lang="ts">
+ import type { LockDragEvent } from './lockdrag.js';
  import lockdrag from '$lib/lockdrag.js';
  import DumbKnob from '$lib/DumbKnob.svelte';
- const clamp = (a, b, c) => Math.min(Math.max(a, b), c);
  export let min = 0;
  export let max = 100;
  export let step = (min + max) / 100;
  export let value = 50;
- export let size;
+ export let size: string;
  export let textColor = '';
  export let options = {};
- export let component = DumbKnob;
  export let label = '';
- let inputElem;
- function knobMove({detail: { movementY }}) {
+ let inputElem: HTMLElement;
+ function clamp(a: number, b: number, c: number): number {
+     return Math.min(Math.max(a, b), c);
+ }
+ function knobMove(event: LockDragEvent) {
+     const movementY: number = event.detail.movementY;
      if (movementY) {
          value = clamp(min, value - (movementY*step), max);
      }
  }
- function knobRelease({detail: { movementY }}) {
+ function knobRelease({detail: { movementY }}: LockDragEvent) {
      if (movementY === 0) {
          inputElem.focus();
      }
@@ -29,8 +32,7 @@
      on:lockdrag="{knobMove}"
      on:lockdragrelease="{knobRelease}">
     <div class="knob">
-        <svelte:component
-            this={component}
+        <DumbKnob
             {value} {min} {max} {label} {size} {textColor}
         />
     </div>
