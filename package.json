@@ -1,5 +1,5 @@
 {
-	"name": "svelte-dj-knob",
+	"name": "@bismuthsoft/svelte-dj-knob",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
