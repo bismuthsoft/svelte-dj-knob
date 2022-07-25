@@ -6,7 +6,7 @@
  export let max = 100;
  export let step = (min + max) / 100;
  export let value = 50;
- export let size: string;
+ export let size = '5rem';
  export let textColor = '';
  export let options = {};
  export let label = '';
