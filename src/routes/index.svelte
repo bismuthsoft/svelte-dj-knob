@@ -1,4 +1,5 @@
 <script>
+ import OldKnob from '$lib/OldKnob.svelte';
  import Knob from '$lib/Knob.svelte';
  import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
@@ -9,8 +10,15 @@
 </script>
 
 <div>
+    <OldKnob
+        label="old-knob"
+        bind:value
+        size="10rem"
+        textColor="white"
+        {options}
+    />
     <Knob
-        label="svelte-dj-knob"
+        label="new-knob"
         bind:value
         size="10rem"
         textColor="white"
