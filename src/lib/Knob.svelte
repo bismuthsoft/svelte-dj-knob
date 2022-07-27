@@ -1,31 +1,18 @@
 <script lang="ts">
- import type { LockDragEvent } from './lockdrag.js';
- import lockdrag from '$lib/lockdrag.js';
+ import { writable } from 'svelte/store';
+ import knobdrag from './knobdrag.js';
+ // Parameters
  export let min = 0;
  export let max = 100;
  export let step = (min + max) / 100;
- export let value = 50;
+ export let value = writable(50);
+ $: knobParams = { min, max, step, value };
+ // Aesthetic
  export let size = '5rem';
  export let textColor = '';
- export let options = {};
  export let label = '';
- let inputElem: HTMLElement;
- function clamp(a: number, b: number, c: number): number {
-     return Math.min(Math.max(a, b), c);
- }
- function knobMove(event: LockDragEvent) {
-     const movementY: number = event.detail.movementY;
-     if (movementY) {
-         value = clamp(min, value - (movementY*step), max);
-     }
- }
- function knobRelease({detail: { movementY }}: LockDragEvent) {
-     if (movementY === 0) {
-         inputElem.focus();
-     }
- }
 
- const radius = 50;
+ const radius = 1;
  const margin = radius * 0.2;
  const circumfrence = 0.8;
  const innerRadius = radius - margin;
@@ -52,31 +39,28 @@
      [pointOnKnob(x/(numTicks-1), innerRadius), pointOnKnob(x/(numTicks-1), radius*0.95)]
  );
 
- $: rangePos = value / (max - min) - min;
+ $: rangePos = $value / (max - min) - min;
  $: pointer = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
 </script>
 
-<div class="knobber"
-     use:lockdrag="{options}"
-     on:lockdrag="{knobMove}"
-     on:lockdragrelease="{knobRelease}">
+<div class="knobber" use:knobdrag={knobParams}>
     <div class="knob">
         <div>
-            <svg viewBox="{-radius*.1} 0 {radius*2.2} {radius*2}"
+            <svg viewBox="{-radius*.1*radius/50} 0 {radius*2.2} {radius*2}"
                  height="{size}">
                 {#each outerTicks as tick}
                     <line x1="{tick[0].x}" y1="{tick[0].y}"
                           x2="{tick[1].x}" y2="{tick[1].y}"
                           stroke="#aaa"
-                          stroke-width="3"
+                          stroke-width="{3*radius/50}"
                     />
                 {/each}
                 <circle cx="{radius}" cy="{radius}" r="{innerRadius}"
-                        stroke="white" stroke-width="4" fill="black"/>
+                        stroke="white" stroke-width="{4*radius/50}" fill="black"/>
                 <line x1="{pointer[0].x}" y1="{pointer[0].y}"
                       x2="{pointer[1].x}" y2="{pointer[1].y}"
                       stroke="red"
-                      stroke-width="6"
+                      stroke-width="{6*radius/50}"
                       stroke-linecap="round"
                 />
                 <text class="tickLabel"
@@ -99,12 +83,7 @@
             </span>
         </div>
     </div>
-    <input type="text"
-           bind:this="{inputElem}"
-           on:change="{e => value = e.target.value}"
-           {value}
-
-    />
+    <input type="text" value={$value} on:change="{e => $value = e.target.value}" />
 </div>
 
 <style>

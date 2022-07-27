@@ -1,4 +1,5 @@
 <script>
+ import { writable } from 'svelte/store';
  import OldKnob from '$lib/OldKnob.svelte';
  import Knob from '$lib/Knob.svelte';
  import MinimalKnob from '$lib/MinimalKnob.svelte';
@@ -6,13 +7,13 @@
  let options = {
      originFix: false,
  };
- let value = 0;
+ let value = writable(0);
 </script>
 
 <div>
     <OldKnob
         label="old-knob"
-        bind:value
+        bind:value="{$value}"
         size="10rem"
         textColor="white"
         {options}
@@ -25,7 +26,7 @@
         {options}
     />
     <MinimalKnob
-        bind:value
+        bind:value="{$value}"
         size="10rem"
         {options}
     />
@@ -40,6 +41,7 @@
  div {
      display: flex;
      flex-direction: column;
+     align-items: center;
  }
  p {
      text-align: center;
