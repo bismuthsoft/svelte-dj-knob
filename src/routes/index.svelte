@@ -10,21 +10,23 @@
  let value = writable(0);
 </script>
 
-<div>
-    <OldKnob
-        label="old-knob"
-        bind:value="{$value}"
-        size="10rem"
-        textColor="white"
-        {options}
-    />
-    <Knob
-        label="new-knob"
-        bind:value
-        size="10rem"
-        textColor="white"
-        {options}
-    />
+<div class="flex-v">
+    <div class="flex-h">
+        <OldKnob
+            label="old-knob"
+            bind:value="{$value}"
+            size="10rem"
+            textColor="white"
+            {options}
+        />
+        <Knob
+            label="new-knob"
+            bind:value
+            size="10rem"
+            textColor="white"
+            {options}
+        />
+    </div>
     <MinimalKnob
         bind:value="{$value}"
         size="10rem"
@@ -38,10 +40,13 @@
 </div>
 
 <style>
- div {
+ .flex-v,
+ .flex-h {
      display: flex;
-     flex-direction: column;
      align-items: center;
+ }
+ .flex-v {
+     flex-direction: column;
  }
  p {
      text-align: center;
