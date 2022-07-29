@@ -39,6 +39,7 @@
  div {
      display: flex;
      flex-direction: column;
+     place-items: center;
  }
  p {
      text-align: center;
