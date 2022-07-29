@@ -1,6 +1,8 @@
 <script>
  import Knob from '$lib/Knob.svelte';
  import MinimalKnob from '$lib/MinimalKnob.svelte';
+ import DigitalKnob from '$lib/DigitalKnob.svelte';
+
  import Options from '$lib/Options.svelte';
  let options = {
      originFix: false,
@@ -17,6 +19,11 @@
         {options}
     />
     <MinimalKnob
+        bind:value
+        size="10rem"
+        {options}
+    />
+    <DigitalKnob
         bind:value
         size="10rem"
         {options}
