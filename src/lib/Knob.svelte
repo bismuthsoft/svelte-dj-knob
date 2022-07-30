@@ -25,6 +25,11 @@
          inputElem.focus();
      }
  }
+ function onInputChange(event: {currentTarget: HTMLInputElement}) {
+     if (!isNaN(event.currentTarget.value as any)) {
+         value = Number(event.currentTarget.value);
+     }
+ }
 </script>
 
 <div class="knobber"
@@ -38,7 +43,7 @@
     </div>
     <input type="text"
            bind:this="{inputElem}"
-           on:change="{e => value = e.target.value}"
+           on:change="{onInputChange}"
            {value}
 
     />
