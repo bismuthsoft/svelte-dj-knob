@@ -1,26 +1,19 @@
 <script>
  import { writable } from 'svelte/store';
- import OldKnob from '$lib/OldKnob.svelte';
  import Knob from '$lib/Knob.svelte';
  import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
  let options = {
      originFix: false,
+     lockCursor: true,
  };
  let value = writable(0);
 </script>
 
 <div class="flex-v">
     <div class="flex-h">
-        <OldKnob
-            label="old-knob"
-            bind:value="{$value}"
-            size="10rem"
-            textColor="white"
-            {options}
-        />
         <Knob
-            label="new-knob"
+            label="svelte-dj-knob"
             bind:value
             size="10rem"
             textColor="white"
@@ -28,7 +21,7 @@
         />
     </div>
     <MinimalKnob
-        bind:value="{$value}"
+        bind:value
         size="10rem"
         {options}
     />
@@ -60,6 +53,5 @@
      background: #65A;
      color: white;
      font-family: sans-serif;
-     overflow: hidden;
  }
 </style>

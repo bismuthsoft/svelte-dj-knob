@@ -10,60 +10,77 @@ interface MovementI {
 
 export interface OptionsI {
     originFix?: boolean,
+    lockCursor?: boolean,
 }
+
+const defaultOptions: Readonly<OptionsI> = {
+    originFix: false,
+    lockCursor: true,
+};
 
 export type LockDragEvent = CustomEvent<MovementI>;
 
-export default function lockDrag(elem: HTMLElement, options: OptionsI = {
-    originFix: false,
-}) {
-    let totals = defaultTotals();
-    let origin: MovementI | undefined;
-    function pointerDown() {
-        elem.requestPointerLock();
-    }
-    function pointerMove(event: PointerEvent) {
-        let { movementX, movementY } = event;
-        // For some reason firefox on some systems has an origin of -1 -1
-        // instead of 0 0. This hack assumes the first frame of pointermove is
-        // the origin. An implication of this hack is if the element is clicked
-        // with velocity the pointer continues to move in that direction.
-        //
-        // Possibly related issue: https://github.com/w3c/pointerlock/issues/42
-        if (options.originFix) {
-            origin ??= { movementX, movementY };
-            movementX -= origin.movementX;
-            movementY -= origin.movementY;
+export default function lockDrag(elem: HTMLElement, options: OptionsI) {
+    options = {...defaultOptions, ...options};
+    const actions = [
+        pointercapture(elem),
+        ...(options.lockCursor ? [pointerlock(elem)] : []),
+    ];
+    return {
+        destroy() {
+            actions.forEach(action => action.destroy());
+        },
+        update(newOptions: OptionsI) {
+            options = newOptions;
         }
-        const detail = { movementX, movementY };
-        elem.dispatchEvent(new CustomEvent("lockdrag", {detail}) as LockDragEvent);
-        totals.movementX += detail.movementX;
-        totals.movementY += detail.movementY;
     }
-    function pointerUp() {
-        origin = undefined;
-        document.removeEventListener('pointerup', pointerUp);
-        document.exitPointerLock();
-        elem.dispatchEvent(new CustomEvent("lockdragrelease", { detail: totals }) as LockDragEvent);
-        totals = defaultTotals();
+}
+
+
+function stopPropagation(event: Event) {
+    event.stopPropagation();
+}
+function preventDefault(event: Event) {
+    event.preventDefault();
+}
+
+export function pointerlock(elem: HTMLElement) {
+    function documentPointerMove(event: PointerEvent) {
+        elem.dispatchEvent(new MouseEvent(event.type, event));
     }
-    function pointerLockChange() {
+    function enterLock() { elem.requestPointerLock(); }
+    function exitLock() { document.exitPointerLock(); }
+    function lockChange() {
         if(document.pointerLockElement === elem) {
-            document.addEventListener('pointermove', pointerMove);
-            document.addEventListener('pointerup', pointerUp);
+            document.addEventListener('pointermove', documentPointerMove);
+            elem.addEventListener('pointermove', stopPropagation);
         } else {
-            document.removeEventListener('pointermove', pointerMove);
+            document.removeEventListener('pointermove', documentPointerMove);
+            elem.removeEventListener('pointermove', stopPropagation);
         }
+    }
+    elem.addEventListener('mousedown', enterLock);
+    elem.addEventListener('mouseup', exitLock);
+    document.addEventListener('pointerlockchange', lockChange);
+    return {
+        destroy() {
+            elem.removeEventListener('mousedown', enterLock);
+            elem.removeEventListener('mouseup', exitLock);
+            document.removeEventListener('pointerlockchange', lockChange);
+        }
+    }
+}
+
+export function pointercapture(elem: HTMLElement) {
+    function pointerDown(event: PointerEvent) {
+        elem.setPointerCapture(event.pointerId);
     }
     elem.addEventListener('pointerdown', pointerDown);
-    document.addEventListener('pointerlockchange', pointerLockChange);
+    elem.addEventListener('touchmove', preventDefault);
     return {
         destroy() {
             elem.removeEventListener('pointerdown', pointerDown);
-            document.removeEventListener('pointerlockchange', pointerLockChange);
-        },
-        update(newOpts: OptionsI) {
-            options = newOpts;
+            elem.removeEventListener('touchmove', preventDefault);
         }
     }
 }

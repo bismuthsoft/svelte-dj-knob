@@ -1,12 +1,14 @@
 <script lang="ts">
  import { writable } from 'svelte/store';
  import knobdrag from './knobdrag.js';
+ import type { OptionsI as LockdragOptions } from './lockdrag';
  // Parameters
  export let min = 0;
  export let max = 100;
  export let step = (min + max) / 100;
  export let value = writable(50);
- $: knobParams = { min, max, step, value };
+ export let options: LockdragOptions;
+ $: knobParams = { min, max, step, value, options };
  // Aesthetic
  export let size = '5rem';
  export let textColor = '';
