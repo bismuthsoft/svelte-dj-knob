@@ -8,7 +8,7 @@
  export let size = '5rem';
  export let strokeWidth = 0.4;
  export let options = {};
- let inputElem: HTMLElement;
+ let inputElem: HTMLInputElement;
  function clamp(a: number, b: number, c: number): number {
      return Math.min(Math.max(a, b), c);
  }
@@ -20,7 +20,7 @@
  }
  function knobRelease({detail: { movementY }}: LockDragEvent) {
      if (movementY === 0) {
-         inputElem.focus();
+         inputElem.select();
      }
  }
  function onInputChange(event: {currentTarget: HTMLInputElement}) {
