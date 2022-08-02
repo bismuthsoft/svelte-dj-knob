@@ -7,6 +7,8 @@
  export let value = 50;
  export let size = '5rem';
  export let strokeWidth = 0.4;
+ export let bgColor: string;
+ export let fgColor: string;
  export let options = {};
  let inputElem: HTMLInputElement;
  function clamp(a: number, b: number, c: number): number {
@@ -39,9 +41,11 @@
     <div class="knob">
         <svg viewBox="{-1-strokeWidth/2} {-1-strokeWidth/2} {2+strokeWidth} {2+strokeWidth}">
             <circle class="knobBg" cx="0" cy="0" r="1"
+                    style:stroke="{bgColor}"
                     style:stroke-width="{strokeWidth}"
             />
             <circle class="knobFg" cx="0" cy="0" r="1" transform="rotate({90} 0 0)"
+                    style:stroke="{fgColor}"
                     style:stroke-width="{strokeWidth*0.8}"
                     style:stroke-dashoffset="{2*Math.PI - 2 * Math.PI*(value / (max - min) - min)}"
                     style:stroke-dasharray="{2 * Math.PI}"
@@ -59,12 +63,12 @@
 
 <style>
  .knobBg {
-     stroke: #ffffff;
-     fill: #00000000;
+     stroke: #fff;
+     fill: #0000;
  }
  .knobFg {
      stroke: #7f9fff;
-     fill: #00000000;
+     fill: #0000;
  }
  .knobber {
      user-select: none;
