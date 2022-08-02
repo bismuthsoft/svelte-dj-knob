@@ -30,6 +30,9 @@
          value = Number(event.currentTarget.value);
      }
  }
+ function formatInput(value: number) {
+     return value.toFixed(2).replace(/\.?0?0?$/, '')
+ }
 </script>
 
 <div class="knobber"
@@ -53,11 +56,10 @@
         </svg>
         <div class="knobValue"></div>
     </div>
-    <input type="text"
+    <input type="number"
            bind:this="{inputElem}"
-           {value}
-
            on:change="{onInputChange}"
+           value="{formatInput(value)}"
     />
 </div>
 
@@ -83,14 +85,20 @@
      z-index: 5;
      user-select: none;
      pointer-events: none;
-     font-size: 2rem;
+     font-size: 1rem;
      width: 2em;
      text-align: center;
      background: #0000;
-     color: #0000;
      border: none;
  }
- input:focus {
-     color: white;
+ /* Hide spin buttons on <input type="number"> */
+ /* source: https://stackoverflow.com/a/27935448 */
+ input[type="number"]::-webkit-outer-spin-button,
+ input[type="number"]::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+     margin: 0;
+ }
+ input[type="number"] {
+     -moz-appearance: textfield;
  }
 </style>
