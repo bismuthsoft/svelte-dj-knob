@@ -29,7 +29,10 @@
         A knob with usable controls
         similar to those in DJ software
     </p>
-    <Options bind:options />
+    <section>
+        <heading>Options</heading>
+        <Options bind:options />
+    </section>
 </div>
 
 <style>
@@ -44,6 +47,16 @@
  p {
      text-align: center;
      max-width: 25ch;
+ }
+ section {
+     padding: 1em;
+     border: dotted 2px #fff8;
+ }
+ heading {
+     display: block;
+     font-size: 1.2rem;
+     font-weight: bold;
+     margin-bottom: .5em;
  }
  :global(body) {
      margin: 0;

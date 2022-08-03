@@ -22,20 +22,29 @@ export type LockDragEvent = CustomEvent<MovementI>;
 
 export default function lockDrag(elem: HTMLElement, options: OptionsI) {
     options = {...defaultOptions, ...options};
-    const actions = [
-        pointercapture(elem),
-        ...(options.lockCursor ? [pointerlock(elem)] : []),
-    ];
+    const actions = new Map();
+    actions.set('pointercapture', pointercapture(elem));
+    if (options.lockCursor) {
+        actions.set('pointerlock', pointerlock(elem));
+    }
     return {
         destroy() {
             actions.forEach(action => action.destroy());
         },
         update(newOptions: OptionsI) {
+            if (options.lockCursor !== newOptions.lockCursor) {
+                alert('updating')
+                if (newOptions.lockCursor) {
+                    actions.set('pointerlock', pointerlock(elem));
+                } else {
+                    actions.get('pointerlock')?.destroy();
+                    actions.delete('pointerlock');
+                }
+            }
             options = newOptions;
         }
     }
 }
-
 
 function stopPropagation(event: Event) {
     event.stopPropagation();
