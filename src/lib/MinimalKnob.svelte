@@ -50,7 +50,7 @@
             <circle class="knobFg" cx="0" cy="0" r="1" transform="rotate({90} 0 0)"
                     style:stroke="{fgColor}"
                     style:stroke-width="{strokeWidth*0.8}"
-                    style:stroke-dashoffset="{2*Math.PI - 2 * Math.PI*(value / (max - min) - min)}"
+                    style:stroke-dashoffset="{2*Math.PI - 2 * Math.PI * (value - min) / (max - min)}"
                     style:stroke-dasharray="{2 * Math.PI}"
             />
         </svg>
