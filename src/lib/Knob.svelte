@@ -1,14 +1,19 @@
 <script lang="ts">
  import { writable } from 'svelte/store';
+ import { onDestroy } from 'svelte';
  import knobdrag from './knobdrag.js';
- import type { OptionsI as LockdragOptions } from './lockdrag';
  // Parameters
  export let min = 0;
  export let max = 100;
  export let step = (min + max) / 100;
- export let value = writable(50);
- export let options: LockdragOptions;
- $: knobParams = { min, max, step, value, options };
+
+ export let value: number;
+
+ const valueStore = writable(value);
+ onDestroy(valueStore.subscribe(newVal => value = newVal));
+ $: $valueStore = value;
+
+ $: knobParams = { min, max, step, value: valueStore };
  // Aesthetic
  export let size = '5rem';
  export let textColor = '';
@@ -41,7 +46,7 @@
      [pointOnKnob(x/(numTicks-1), innerRadius), pointOnKnob(x/(numTicks-1), radius*0.95)]
  );
 
- $: rangePos = $value / (max - min) - min;
+ $: rangePos = value / (max - min) - min;
  $: pointer = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
 </script>
 
@@ -85,7 +90,7 @@
             </span>
         </div>
     </div>
-    <input type="text" value={$value} on:change="{e => $value = e.target.value}" />
+    <input type="text" {value} on:change="{e => value = e.target.value}" />
 </div>
 
 <style>

@@ -1,15 +1,12 @@
-<script lang="ts">
- import type { OptionsI } from './lockdrag.js';
- export let options: OptionsI;
+<script lang="ts" context="module">
+ import { writable } from 'svelte/store';
+ export const options = writable({
+     lockCursor: true,
+ });
 </script>
 
-<label title="Enable if knob drifts constantly when clicked">
-    <input type="checkbox" bind:checked="{options.originFix}" />
-    Knob Drift Fix
-</label>
-
 <label title="Prevent cursor from moving while dragging knob">
-    <input type="checkbox" bind:checked="{options.lockCursor}" />
+    <input type="checkbox" bind:checked="{$options.lockCursor}" />
     Lock Cursor
 </label>
 

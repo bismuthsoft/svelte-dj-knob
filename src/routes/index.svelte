@@ -1,13 +1,7 @@
 <script>
- import { writable } from 'svelte/store';
  import Knob from '$lib/Knob.svelte';
- import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
- let options = {
-     originFix: false,
-     lockCursor: true,
- };
- let value = writable(0);
+ let value = 0;
 </script>
 
 <div class="flex-v">
@@ -17,22 +11,16 @@
             bind:value
             size="10rem"
             textColor="white"
-            {options}
         />
     </div>
-    <MinimalKnob
-        bind:value
-        size="10rem"
-        {options}
-    />
     <p>
         A knob with usable controls
         similar to those in DJ software
     </p>
     <section>
         <heading>Options</heading>
-        <Options bind:options />
-    </section>
+        <Options />
+   </section>
 </div>
 
 <style>
