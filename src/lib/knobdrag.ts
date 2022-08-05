@@ -1,5 +1,5 @@
 import type { Writable } from 'svelte/store';
-import { options } from './Options.svelte';
+import options from './options.js';
 
 interface Params {
     min: number,
@@ -8,7 +8,7 @@ interface Params {
     value: Writable<number>,
 }
 
-export default function knobdrag(elem: HTMLElement | SVGElement, params: Params) {
+export default function knobdrag(elem: HTMLElement, params: Params) {
     const actions = new Map();
     actions.set('pointercapture', pointercapture(elem));
     options.subscribe($options => {

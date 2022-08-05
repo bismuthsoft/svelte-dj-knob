@@ -1,8 +1,5 @@
-<script lang="ts" context="module">
- import { writable } from 'svelte/store';
- export const options = writable({
-     lockCursor: true,
- });
+<script lang="ts">
+ import options from './options.js';
 </script>
 
 <label title="Prevent cursor from moving while dragging knob">
