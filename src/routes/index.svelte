@@ -1,5 +1,6 @@
 <script>
  import Knob from '$lib/Knob.svelte';
+ import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
  let value = 0;
 </script>
@@ -11,6 +12,10 @@
             bind:value
             size="10rem"
             textColor="white"
+        />
+        <MinimalKnob
+            bind:value
+            size="10rem"
         />
     </div>
     <p>
@@ -31,6 +36,7 @@
  }
  .flex-v {
      flex-direction: column;
+     place-items: center;
  }
  p {
      text-align: center;

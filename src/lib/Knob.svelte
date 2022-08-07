@@ -48,6 +48,12 @@
 
  $: rangePos = value / (max - min) - min;
  $: pointer = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
+
+ function onInputChange(event: {currentTarget: HTMLInputElement}) {
+     if (!isNaN(event.currentTarget.value as any)) {
+         value = Number(event.currentTarget.value);
+     }
+ }
 </script>
 
 <div class="knobber" use:knobdrag={knobParams}>
@@ -90,7 +96,11 @@
             </span>
         </div>
     </div>
-    <input type="text" {value} on:change="{e => value = e.target.value}" />
+    <input
+        type="text"
+        on:change="{onInputChange}"
+        {value}
+    />
 </div>
 
 <style>

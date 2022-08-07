@@ -6,55 +6,53 @@
  export let size = "5rem";
  export let textColor = '';
 
- const radius = 50;
- const margin = radius * 0.2;
- const circumfrence = 0.8;
- const innerRadius = radius - margin;
+ $: normValue = (value - min) / (max - min);
 
- const tickLabelWidth = radius * 0.35;
- const minTickLabel = { x: tickLabelWidth, y: radius*1.8 };
- const maxTickLabel = { x: radius*2 - tickLabelWidth, y: radius*1.8 };
+ const knobSize = 0.8; // Size of knob in element (compared to ticks)
+ const tickLabelWidth = 0.35;
+ const arcLength = Math.PI * 0.8; // How far around the circle
 
+ const minTickLabel = { x: tickLabelWidth, y: 1.8 };
+ const maxTickLabel = { x: 2 - tickLabelWidth, y: 1.8 };
+
+ // Position 0-1 to give an angle in radians
  function angleOnKnob (position: number) {
-     const bottomAngle = -Math.PI / 2.0;
-     const leastAngle = bottomAngle - (Math.PI * circumfrence);
-     const mostAngle = bottomAngle + (Math.PI * circumfrence);
-     return leastAngle + position * (mostAngle-leastAngle)
+     const leastAngle = -Math.PI / 2.0 - arcLength;
+     return leastAngle + position * arcLength * 2;
  }
 
- function pointOnKnob (position: number, rad: number = radius) {
+ // Position 0-1 corresponds with an angle, rad is the distance from the center
+ function pointOnKnob (position: number, rad: number = 1) {
      const angle = angleOnKnob(position);
-     const out = {x: Math.cos(angle)*rad + radius, y: Math.sin(angle)*rad + radius};
+     const out = {x: Math.cos(angle)*rad + 1, y: Math.sin(angle)*rad + 1};
      return out;
  }
 
- const numTicks = 9;
+ const numTicks = 10;
  const outerTicks = Array(numTicks).fill(0).map((_, x) =>
-     [pointOnKnob(x/(numTicks-1), innerRadius), pointOnKnob(x/(numTicks-1), radius*0.95)]
+     [pointOnKnob(x/(numTicks-1), 0.88), pointOnKnob(x/(numTicks-1), 0.92)]
  );
-
- $: rangePos = value / (max - min) - min;
- $: pointer = [pointOnKnob(rangePos, innerRadius*0.8), pointOnKnob(rangePos, innerRadius*0.3)];
 </script>
 
 <div>
-    <svg viewBox="{-radius*.1} 0 {radius*2.2} {radius*2}"
+    <svg viewBox="-0.1 0 2.2 2"
          height="{size}">
         {#each outerTicks as tick}
             <line x1="{tick[0].x}" y1="{tick[0].y}"
                   x2="{tick[1].x}" y2="{tick[1].y}"
-                  stroke="#aaa"
-                  stroke-width="3"
+                  stroke="#fff"
+                  stroke-width="0.05"
+                  stroke-linecap="round"
             />
         {/each}
-        <circle cx="{radius}" cy="{radius}" r="{innerRadius}"
-                stroke="white" stroke-width="4" fill="black"/>
-        <line x1="{pointer[0].x}" y1="{pointer[0].y}"
-              x2="{pointer[1].x}" y2="{pointer[1].y}"
-              stroke="red"
-              stroke-width="6"
-              stroke-linecap="round"
+        <circle cx=1 cy=1 r="{knobSize}"
+                fill="white"/>
+        <polygon transform="rotate({angleOnKnob(normValue) * 360 / Math.PI / 2.0} 1 1)"
+                 points="1,0.7 {1+knobSize},1.0 1,1.3"
+                 fill="#0044ee"
         />
+        <circle cx=1 cy=1 r="{0.3}"
+                fill="white"/>
         <text class="tickLabel"
               fill="{textColor}"
               {...minTickLabel}
@@ -87,6 +85,6 @@
  }
  .tickLabel {
      position: absolute;
-     font-size: 10px;
+     font-size: 0.2px;
  }
 </style>
