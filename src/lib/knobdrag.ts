@@ -74,8 +74,9 @@ function preventDefault(event: Event) {
 }
 
 function pointerlock(elem: HTMLElement) {
-    function enterLock() {
-        elem.requestPointerLock();
+    function enterLock(event: MouseEvent) {
+        if (event.button !== 2)
+            elem.requestPointerLock();
     }
     function exitLock() {
         document.exitPointerLock();
@@ -101,7 +102,8 @@ function pointerlock(elem: HTMLElement) {
 
 function pointercapture(elem: HTMLElement) {
     function pointerDown(event: PointerEvent) {
-        elem.setPointerCapture(event.pointerId);
+        if (event.button !== 2)
+            elem.setPointerCapture(event.pointerId);
     }
     elem.addEventListener('pointerdown', pointerDown);
     elem.addEventListener('touchmove', preventDefault);
