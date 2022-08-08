@@ -1,6 +1,6 @@
 {
 	"name": "@bismuthsoft/svelte-dj-knob",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
