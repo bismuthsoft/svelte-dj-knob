@@ -1,5 +1,6 @@
 <script lang="ts">
- import knobdrag, {makeValueStore} from './knobdrag.js';
+ import knobdrag, {makeValueStore} from '$lib/knobdrag.js';
+ import Input from '$lib/Input.svelte';
 
  // Parameters
  export let min = 0;
@@ -18,15 +19,6 @@
  export let fgColor = '#7f9fff';
  export let label: string | undefined;
 
- function onInputChange(event: {currentTarget: HTMLInputElement}) {
-     const newValue = Number(event.currentTarget.value);
-     if (!Number.isNaN(newValue)) {
-         value = newValue;
-     }
- }
- function formatInput(value: number) {
-     return Math.floor(value * 100) / 100;
- }
 </script>
 
 <div style:display="flex" style:flex-direction="column" style:align-items="center">
@@ -46,12 +38,10 @@
         />
         <foreignObject x="-20" y="-20" width="40" height="40">
             <div>
-                <input
-                    type="text"
-                    on:change="{onInputChange}"
-                    value="{formatInput(value)}"
-                    bind:this="{inputElem}"
-                    style:color="{bgColor}"
+                <Input
+                    bind:value
+                    bind:inputElem
+                    color="{bgColor}"
                 />
             </div>
         </foreignObject>
@@ -79,16 +69,5 @@
      height: 100%;
      display: grid;
      place-items: center;
- }
- input {
-     width: 100%;
-     text-align: center;
-     background: none;
-     border: none;
-     outline: none;
-     pointer-events: none;
- }
- input:focus {
-     pointer-events: auto;
  }
 </style>
