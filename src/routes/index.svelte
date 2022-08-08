@@ -1,5 +1,4 @@
 <script>
- import Knob from '$lib/Knob.svelte';
  import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
  let value = 0;
@@ -7,13 +6,8 @@
 
 <div class="flex-v">
     <div class="flex-h">
-        <Knob
-            label="svelte-dj-knob"
-            bind:value
-            size="10rem"
-            textColor="white"
-        />
         <MinimalKnob
+            label="svelte-dj-knob"
             bind:value
             size="10rem"
         />
