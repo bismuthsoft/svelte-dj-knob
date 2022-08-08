@@ -23,7 +23,8 @@
  }
  function knobColor(backgroundColor) {
      const color = new Color(backgroundColor);
-     color.lch.c += 20;
+     color.lch.h -= 20;
+     color.lch.l -= 10;
      return color;
  }
 </script>
@@ -44,7 +45,7 @@
         A knob with usable controls
         similar to those in DJ software
     </p>
-    <section>
+    <section style:border-color="{fontColor}">
         <heading>Options</heading>
         <Options />
    </section>
