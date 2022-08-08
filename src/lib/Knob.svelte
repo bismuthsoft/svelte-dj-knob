@@ -6,14 +6,19 @@
  export let min = 0;
  export let max = 100;
  export let step = (min + max) / 100;
-
  export let value: number;
 
  const valueStore = writable(value);
  onDestroy(valueStore.subscribe(newVal => value = newVal));
  $: $valueStore = value;
+ let inputElem;
 
- $: knobParams = { min, max, step, value: valueStore };
+ $: knobParams = {
+     min, max, step,
+     value: valueStore,
+     inputElem,
+ };
+
  // Aesthetic
  export let size = '5rem';
  export let textColor = '';
@@ -56,7 +61,7 @@
  }
 </script>
 
-<div class="knobber" use:knobdrag={knobParams}>
+<div class="knobber">
     <div class="knob">
         <div>
             <svg viewBox="{-radius*.1*radius/50} 0 {radius*2.2} {radius*2}"
@@ -69,7 +74,8 @@
                     />
                 {/each}
                 <circle cx="{radius}" cy="{radius}" r="{innerRadius}"
-                        stroke="white" stroke-width="{4*radius/50}" fill="black"/>
+                        stroke="white" stroke-width="{4*radius/50}" fill="black"
+                        use:knobdrag={knobParams} />
                 <line x1="{pointer[0].x}" y1="{pointer[0].y}"
                       x2="{pointer[1].x}" y2="{pointer[1].y}"
                       stroke="red"
@@ -98,6 +104,7 @@
     </div>
     <input
         type="text"
+        bind:this="{inputElem}"
         on:change="{onInputChange}"
         {value}
     />
@@ -108,21 +115,22 @@
      user-select: none;
      display: inline-grid;
      place-items: center;
+     font-size: 2rem;
  }
  .knob {
      grid-area: 1/1/1/1;
  }
  input {
      grid-area: 1/1/1/1;
-     z-index: 5;
      user-select: none;
      pointer-events: none;
-     font-size: 2rem;
-     width: 2em;
+     width: 100%;
+     font-size: 1em;
      text-align: center;
      background: #0000;
      color: #0000;
      border: none;
+     outline: none;
  }
  input:focus {
      color: white;
