@@ -3,24 +3,25 @@
  import Options from '$lib/Options.svelte';
  import Color from 'colorjs.io';
  import {browser} from '$app/env';
+ import {writable} from 'svelte/store';
 
  const c1 = new Color("rebeccapurple");
  const c2 = new Color("lch", [85, 100, 85]);
  const gradient = c1.range(c2, {space: 'srgb'});
 
- let value = 0;
- $: color = gradient(value / 100);
- $: setBackground(color);
-
- const method = 'APCA'
- $: lightContrast = Math.abs(color.contrast('#fff', method));
- $: darkContrast = Math.abs(color.contrast('#000', method));
- $: fontColor = lightContrast > darkContrast ? '#fff' : '#000';
-
- function setBackground(color) {
+ let value = writable(0);
+ let darkMode = true;
+ let color = 'rebeccapurple';
+ let fontColor = '#fff';
+ value.subscribe($value => {
+     color = gradient($value / 100);
+     console.log(color);
+     darkMode = $value < 66;
+     fontColor = darkMode ? '#fff' : '#000';
      if (browser)
          document.body.style.background = color;
- }
+ });
+
  function knobColor(backgroundColor) {
      const color = new Color(backgroundColor);
      color.lch.h -= 20;
@@ -36,7 +37,7 @@
             label="svelte-dj-knob"
             size="10rem"
             min="{0}" max="{100}"
-            bind:value
+            bind:value="{$value}"
             bgColor="{fontColor}"
             fgColor="{knobColor(color)}"
         />
@@ -48,7 +49,7 @@
     <section style:border-color="{fontColor}">
         <heading>Options</heading>
         <Options />
-   </section>
+    </section>
 </div>
 
 <style>
