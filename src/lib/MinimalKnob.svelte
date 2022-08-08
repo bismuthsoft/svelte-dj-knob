@@ -30,37 +30,37 @@
 </script>
 
 <div style:display="flex" style:flex-direction="column" style:align-items="center">
-<svg style:width="{size}"
-     style:height="{size}"
-     viewBox="{-20-strokeWidth/2} {-20-strokeWidth/2} {40+strokeWidth} {40+strokeWidth}">
-    <circle class="knobBg" cx="0" cy="0" r="20"
-            style:stroke="{bgColor}"
-            style:stroke-width="{strokeWidth}"
-            use:knobdrag="{knobParams}"
-    />
-    <circle class="knobFg" cx="0" cy="0" r="20" transform="rotate({90} 0 0)"
-            style:stroke="{fgColor}"
-            style:stroke-width="{strokeWidth*0.8}"
-            style:stroke-dashoffset="{40*Math.PI - 40 * Math.PI*(value / (max - min) - min)}"
-            style:stroke-dasharray="{40 * Math.PI}"
-    />
-    <foreignObject x="-20" y="-20" width="40" height="40">
-        <div>
-            <input
-                type="text"
-                on:change="{onInputChange}"
-                value="{formatInput(value)}"
-                bind:this="{inputElem}"
-                style:color="{bgColor}"
-            />
+    <svg style:width="{size}"
+         style:height="{size}"
+         viewBox="{-20-strokeWidth/2} {-20-strokeWidth/2} {40+strokeWidth} {40+strokeWidth}">
+        <circle class="knobBg" cx="0" cy="0" r="20"
+                style:stroke="{bgColor}"
+                style:stroke-width="{strokeWidth}"
+                use:knobdrag="{knobParams}"
+        />
+        <circle class="knobFg" cx="0" cy="0" r="20" transform="rotate({90} 0 0)"
+                style:stroke="{fgColor}"
+                style:stroke-width="{strokeWidth*0.8}"
+                style:stroke-dashoffset="{40*Math.PI - 40 * Math.PI*(value / (max - min) - min)}"
+                style:stroke-dasharray="{40 * Math.PI}"
+        />
+        <foreignObject x="-20" y="-20" width="40" height="40">
+            <div>
+                <input
+                    type="text"
+                    on:change="{onInputChange}"
+                    value="{formatInput(value)}"
+                    bind:this="{inputElem}"
+                    style:color="{bgColor}"
+                />
+            </div>
+        </foreignObject>
+    </svg>
+    {#if label}
+        <div style:font-size="calc({size} / 5)">
+            {label}
         </div>
-    </foreignObject>
-</svg>
-{#if label}
-    <div style:font-size="calc({size} / 5)">
-        {label}
-    </div>
-{/if}
+    {/if}
 </div>
 
 <style>
