@@ -1,15 +1,43 @@
 <script>
  import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
+ import Color from 'colorjs.io';
+ import {browser} from '$app/env';
+
+ const c1 = new Color("rebeccapurple");
+ const c2 = new Color("lch", [85, 100, 85]);
+ const gradient = c1.range(c2, {space: 'srgb'});
+
  let value = 0;
+ $: color = gradient(value / 100);
+ $: setBackground(color);
+
+ const method = 'APCA'
+ $: lightContrast = Math.abs(color.contrast('#fff', method));
+ $: darkContrast = Math.abs(color.contrast('#000', method));
+ $: fontColor = lightContrast > darkContrast ? '#fff' : '#000';
+
+ function setBackground(color) {
+     if (browser)
+         document.body.style.background = color;
+ }
+ function knobColor(backgroundColor) {
+     const color = new Color(backgroundColor);
+     color.lch.c += 20;
+     return color;
+ }
 </script>
 
-<div class="flex-v">
+
+<div class="flex-v" style:color="{fontColor}">
     <div class="flex-h">
         <MinimalKnob
             label="svelte-dj-knob"
-            bind:value
             size="10rem"
+            min="{0}" max="{100}"
+            bind:value
+            bgColor="{fontColor}"
+            fgColor="{knobColor(color)}"
         />
     </div>
     <p>
@@ -51,7 +79,7 @@
      display: grid;
      place-items: center;
      height: 100vh;
-     background: #65A;
+     background: rebeccapurple;
      color: white;
      font-family: sans-serif;
  }
