@@ -6,9 +6,9 @@
  export let max = 100;
  export let step = (min + max) / 100;
  export let value = (min + max) / 2;
- const valueStore = makeValueStore(value, $value => value = $value);
+ const valueStore = makeValueStore(value, newValue => value = newValue);
  $: valueStore.set(value);
- let inputElem;
+ let inputElem: Element;
  $: knobParams = { min, max, step, valueStore, inputElem };
 
  // Aesthetic
@@ -19,8 +19,9 @@
  export let label: string | undefined;
 
  function onInputChange(event: {currentTarget: HTMLInputElement}) {
-     if (!isNaN(event.currentTarget.value)) {
-         value = Number(event.currentTarget.value);
+     const newValue = Number(event.currentTarget.value);
+     if (!Number.isNaN(newValue)) {
+         value = newValue;
      }
  }
  function formatInput(value: number) {
