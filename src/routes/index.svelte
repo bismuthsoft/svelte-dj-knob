@@ -15,7 +15,6 @@
  let fontColor = '#fff';
  value.subscribe($value => {
      color = gradient($value / 100);
-     console.log(color);
      darkMode = $value < 66;
      fontColor = darkMode ? '#fff' : '#000';
      if (browser)
