@@ -33,7 +33,7 @@
         <circle class="knobFg" cx="0" cy="0" r="20" transform="rotate({90} 0 0)"
                 style:stroke="{fgColor}"
                 style:stroke-width="{strokeWidth*0.8}"
-                style:stroke-dashoffset="{40*Math.PI - 40 * Math.PI*(value / (max - min) - min)}"
+                style:stroke-dashoffset="{40*Math.PI - 40 * Math.PI * (value - min) / (max - min)}"
                 style:stroke-dasharray="{40 * Math.PI}"
         />
         <foreignObject x="-20" y="-20" width="40" height="40">
