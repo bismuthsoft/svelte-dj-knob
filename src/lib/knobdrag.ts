@@ -107,6 +107,7 @@ function pointercapture(elem: HTMLElement) {
     }
     elem.addEventListener('pointerdown', pointerDown);
     elem.addEventListener('touchmove', preventDefault);
+    // TODO: unneeded?? ^
     return {
         destroy() {
             elem.removeEventListener('pointerdown', pointerDown);
