@@ -17,7 +17,7 @@
  export let strokeWidth = 8;
  export let bgColor = '#fff';
  export let fgColor = '#7f9fff';
- export let label: string | undefined;
+ export let label: string | undefined = undefined;
 
 </script>
 
