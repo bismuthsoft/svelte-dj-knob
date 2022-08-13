@@ -32,6 +32,9 @@ project, and replace `$lib` with `@bismuthsoft/svelte-dj-knob`). The minimal
 knob is < 100 LOC with most of its functionality being imported from other files
 in the library.
 
+Hint: When designing a custom knob, scale the knob so the value text is 16px, as
+the blinking cursor of an <input> in a <svg> cannot be scaled.
+
 ## Developing
 
 Install dependencies with `pnpm install` (or `npm install` or `yarn`), then start a development server:
