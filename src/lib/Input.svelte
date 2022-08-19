@@ -9,6 +9,8 @@
      const newValue = Number(event.currentTarget.value);
      if (!Number.isNaN(newValue)) {
          value = newValue;
+     } else {
+         event.currentTarget.value = format(value).toString();
      }
  }
 </script>
