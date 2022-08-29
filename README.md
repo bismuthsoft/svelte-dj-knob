@@ -35,9 +35,16 @@ in the library.
 Hint: When designing a custom knob, scale the knob so the value text is 16px, as
 the blinking cursor of an <input> in a <svg> cannot be scaled.
 
+## Known issues
+
+Versions of firefox older than 103 (or 102 ESR) has a bug which caused the knob
+to drift constantly on some DPI / zoom configurations. A workaround existed but
+was removed because it caused minor bugs on other browsers.
+
 ## Developing
 
-Install dependencies with `pnpm install` (or `npm install` or `yarn`), then start a development server:
+Install dependencies with `pnpm install` (or `npm install` or `yarn`), then
+start a development server:
 
 ```bash
 npm run dev
