@@ -16,7 +16,7 @@
  export let size = '5rem';
  export let strokeWidth = 8;
  export let bgColor = '#fff';
- export let fgColor = '#7f9fff';
+ export let valueColor = '#7f9fff';
  export let label: string | undefined = undefined;
 
 </script>
@@ -31,7 +31,7 @@
                 use:knobdrag="{knobParams}"
         />
         <circle class="knobFg" cx="0" cy="0" r="20" transform="rotate({90} 0 0)"
-                style:stroke="{fgColor}"
+                style:stroke="{valueColor}"
                 style:stroke-width="{strokeWidth*0.8}"
                 style:stroke-dashoffset="{40*Math.PI - 40 * Math.PI * (value - min) / (max - min)}"
                 style:stroke-dasharray="{40 * Math.PI}"
