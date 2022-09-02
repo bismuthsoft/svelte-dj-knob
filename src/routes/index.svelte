@@ -1,5 +1,5 @@
 <script>
- import MinimalKnob from '$lib/MinimalKnob.svelte';
+ import Knob from '$lib/ElegantKnob.svelte';
  import Options from '$lib/Options.svelte';
  import Color from 'colorjs.io';
  import {browser} from '$app/env';
@@ -12,11 +12,13 @@
  let value = writable(0);
  let darkMode = true;
  let color = 'rebeccapurple';
- let fontColor = '#fff';
+ let textColor = '#fff';
+ let inverseTextColor = '#000';
  value.subscribe($value => {
      color = gradient($value / 100);
      darkMode = $value < 66;
-     fontColor = darkMode ? '#fff' : '#000';
+     textColor = darkMode ? '#fff' : '#000';
+     inverseTextColor = darkMode ? '#000' : '#fff';
      if (browser)
          document.body.style.background = color;
  });
@@ -30,22 +32,23 @@
 </script>
 
 
-<div class="flex-v" style:color="{fontColor}">
+<div class="flex-v" style:color="{textColor}">
     <div class="flex-h">
-        <MinimalKnob
+        <Knob
             label="svelte-dj-knob"
             size="10rem"
             min="{0}" max="{100}"
             bind:value="{$value}"
-            bgColor="{fontColor}"
-            fgColor="{knobColor(color)}"
+            bgColor="{textColor}"
+            fgColor="{inverseTextColor}"
+            valueColor="{knobColor(color)}"
         />
     </div>
     <p>
         A knob with usable controls
         similar to those in DJ software
     </p>
-    <section style:border-color="{fontColor}">
+    <section style:border-color="{textColor}">
         <heading>Options</heading>
         <Options />
     </section>
