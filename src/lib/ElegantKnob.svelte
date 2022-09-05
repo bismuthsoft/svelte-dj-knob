@@ -32,7 +32,7 @@
  }));
 </script>
 
-<div class="ElegantKnob">
+<div class="ElegantKnob" style:width="{size}">
     <div class="value" style:font-size="calc({size} / 5)">
         <Input
             bind:value
@@ -68,9 +68,9 @@
         </g>
     </svg>
     {#if label}
-        <div style:font-size="calc({size} / 5)">
+        <nobr style:font-size="calc({size} / 5)">
             {label}
-        </div>
+        </nobr>
     {/if}
 </div>
 
