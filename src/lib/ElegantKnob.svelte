@@ -32,7 +32,7 @@
  }));
 </script>
 
-<div class="ElegantKnob" style:width="{size}">
+<div class="ElegantKnob">
     <div class="value" style:font-size="calc({size} / 5)">
         <Input
             bind:value
@@ -42,6 +42,7 @@
     </div>
     <svg
         viewBox="0 0 10 8.6"
+        width="{size}"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg">
         <path
@@ -67,7 +68,7 @@
         </g>
     </svg>
     {#if label}
-        <div style:font-size="calc({size} / 8)">
+        <div style:font-size="calc({size} / 5)">
             {label}
         </div>
     {/if}
