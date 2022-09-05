@@ -1,5 +1,6 @@
 <script>
- import Knob from '$lib/ElegantKnob.svelte';
+ import ElegantKnob from '$lib/ElegantKnob.svelte';
+ import MinimalKnob from '$lib/MinimalKnob.svelte';
  import Options from '$lib/Options.svelte';
  import Color from 'colorjs.io';
  import {browser} from '$app/env';
@@ -9,6 +10,7 @@
  const c2 = new Color("lch", [85, 100, 85]);
  const gradient = c1.range(c2, {space: 'srgb'});
 
+ let Knob = MinimalKnob;
  let value = writable(0);
  let darkMode = true;
  let color = 'rebeccapurple';
@@ -33,17 +35,15 @@
 
 
 <div class="flex-v" style:color="{textColor}">
-    <div class="flex-h">
-        <Knob
-            label="svelte-dj-knob"
-            size="10rem"
-            min="{0}" max="{100}"
-            bind:value="{$value}"
-            bgColor="{textColor}"
-            fgColor="{inverseTextColor}"
-            valueColor="{knobColor(color)}"
-        />
-    </div>
+    <svelte:component this="{Knob}"
+        label="svelte-dj-knob"
+        size="10rem"
+        min="{0}" max="{100}"
+        bind:value="{$value}",
+        bgColor="{textColor}"
+        fgColor="{inverseTextColor}"
+        valueColor="{knobColor(color)}"
+    />
     <p>
         A knob with usable controls
         similar to those in DJ software
@@ -51,6 +51,12 @@
     <section style:border-color="{textColor}">
         <heading>Options</heading>
         <Options />
+        <heading>Style</heading>
+        <select bind:value="{Knob}"
+                style:border-color="{textColor}">
+            <option value="{MinimalKnob}">Minimal</option>
+            <option value="{ElegantKnob}">Elegant</option>
+        </select>
     </section>
 </div>
 
@@ -70,13 +76,24 @@
  }
  section {
      padding: 1em;
-     border: dotted 2px #fff8;
+     border: dotted 2px white;
  }
  heading {
      display: block;
      font-size: 1.2rem;
      font-weight: bold;
-     margin-bottom: .5em;
+     margin: .5em 0;
+ }
+ heading:first-child {
+     margin-top: 0;
+ }
+ select {
+     color: inherit;
+     width: 100%;
+     border-radius: .5em;
+     background: none;
+     border: solid 1px white;
+     padding: .5em .25em;
  }
  :global(body) {
      margin: 0;
