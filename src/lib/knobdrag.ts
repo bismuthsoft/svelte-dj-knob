@@ -35,17 +35,31 @@ export default function knobdrag(elem: HTMLElement, params: Params) {
         return distance /= scaleFactor
     }
 
+    // buffer value until it has changed a whole step
+    let rawValue:null|number = null
+    // make a lower multiple of step
+    function floorToStep(v:number) {
+        let surplus = v % params.step
+        // be lenient enough to avoid float error making the last step unattainable (untested)
+        if (surplus + 0.000001 > params.step) surplus = 0
+        return v - surplus
+    }
+    
+
     let moved = false;
     function knobMove(event: PointerEvent): void {
         const { movementY, pointerId } = event;
         if (movementY && hasCapture(pointerId, elem)) {
             params.valueStore.update(value => {
                 moved = true;
-                return clamp(
+                if (rawValue == null) rawValue = value
+                // accumulate this change
+                rawValue = clamp(
                     params.min,
-                    value - (scaleMovement(movementY) * params.step),
+                    rawValue - scaleMovement(movementY),
                     params.max
-                );
+                )
+                return floorToStep(rawValue)
             });
         }
     }
