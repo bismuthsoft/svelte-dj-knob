@@ -26,6 +26,15 @@ export default function knobdrag(elem: HTMLElement, params: Params) {
             actions.delete('pointerlock');
         }
     });
+
+    // fit our range onto a standard drag-distance space
+    //  700px seems good can be done in either direction by a relaxed hand
+    let range = params.max - params.min
+    let scaleFactor = 700 / range
+    function scaleMovement(distance:number) {
+        return distance /= scaleFactor
+    }
+
     let moved = false;
     function knobMove(event: PointerEvent): void {
         const { movementY, pointerId } = event;
@@ -34,7 +43,7 @@ export default function knobdrag(elem: HTMLElement, params: Params) {
                 moved = true;
                 return clamp(
                     params.min,
-                    value - (movementY * params.step),
+                    value - (scaleMovement(movementY) * params.step),
                     params.max
                 );
             });
