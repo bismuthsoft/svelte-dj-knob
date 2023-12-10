@@ -6,6 +6,7 @@ interface Params {
     min: number,
     max: number,
     step: number,
+    space: number,
     valueStore: Writable<number>,
     inputElem: HTMLInputElement,
 }
@@ -30,7 +31,7 @@ export default function knobdrag(elem: HTMLElement, params: Params) {
     // fit our range onto a standard drag-distance space
     //  700px seems good can be done in either direction by a relaxed hand
     let range = params.max - params.min
-    let scaleFactor = 700 / range
+    let scaleFactor = params.space / range
     function scaleMovement(distance:number) {
         return distance /= scaleFactor
     }

@@ -1,16 +1,17 @@
 <script lang="ts">
- import knobdrag, {makeValueStore} from '$lib/knobdrag.js';
- import Input from '$lib/Input.svelte';
+ import knobdrag, {makeValueStore} from './knobdrag.js';
+ import Input from './Input.svelte';
 
  // Parameters
  export let min = 0;
  export let max = 100;
  export let step = (max - min) / 100;
+ export let space = 700;
  export let value = (min + max) / 2;
  const valueStore = makeValueStore(value, newValue => value = newValue);
  $: valueStore.set(value);
  let inputElem: Element;
- $: knobParams = { min, max, step, valueStore, inputElem };
+ $: knobParams = { min, max, step, space, valueStore, inputElem };
 
  // Aesthetic
  export let size = '5rem';
