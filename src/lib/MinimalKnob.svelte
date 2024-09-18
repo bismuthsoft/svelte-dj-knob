@@ -17,6 +17,7 @@
  export let strokeWidth = 8;
  export let bgColor = '#fff';
  export let valueColor = '#7f9fff';
+ export let textColor = '#fff'
  export let label: string | undefined = undefined;
 
 </script>
@@ -41,7 +42,7 @@
                 <Input
                     bind:value
                     bind:inputElem
-                    color="{bgColor}"
+                    color="{textColor}"
                 />
             </div>
         </foreignObject>
