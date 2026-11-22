@@ -1,7 +1,7 @@
 {
 	"extends": "$app/tsconfig",
 	"include": ["src", "tests", "*"],
-	"exclude": ["src/service-worker", "examples", "dist", "build", "package"],
+	"exclude": ["src/service-worker", "examples", "dist", "build", "package", ".netlify"],
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,

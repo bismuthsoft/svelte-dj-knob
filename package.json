@@ -65,7 +65,7 @@
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@playwright/test": "^1.65.1",
-		"@sveltejs/adapter-auto": "^9.0.0",
+		"@sveltejs/adapter-netlify": "^7.0.1",
 		"@sveltejs/kit": "^3.4.0",
 		"@sveltejs/package": "^3.0.3",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",

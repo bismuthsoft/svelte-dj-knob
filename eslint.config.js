@@ -30,6 +30,7 @@ export default ts.config(
 			'build/',
 			'dist/',
 			'.svelte-kit/',
+			'.netlify/',
 			'package/',
 			'examples/',
 			'test-results/',
