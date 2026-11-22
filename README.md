@@ -9,26 +9,26 @@ clicking on the knob lets you type in an arbitrary value.
 
 The most basic usage is to import the default knob and configure it with props:
 
-``` svelte
+```svelte
 <script>
- import Knob from '@bismuthsoft/svelte-dj-knob';
- let knobValue;
+	import Knob from 'svelte-dj-knob';
+	let knobValue = $state(50);
 </script>
 
 <Knob
-    min="{0}"
-    max="{100}"
-    step="{0.2}"
-    bind:value="{knobValue}"
-    size="10rem"
-    strokeWidth="{10}"
-    bgColor="#fff"
-    fgColor="red"
+	min={0}
+	max={100}
+	step={0.2}
+	bind:value={knobValue}
+	size="10rem"
+	strokeWidth={10}
+	bgColor="#fff"
+	valueColor="red"
 />
 ```
 
 For more advanced usage, copy `./src/lib/MinimalKnob.svelte` into your own
-project, and replace `$lib` with `@bismuthsoft/svelte-dj-knob`). The minimal
+project, and replace the relative imports with `svelte-dj-knob`. The minimal
 knob is < 100 LOC with most of its functionality being imported from other files
 in the library.
 
